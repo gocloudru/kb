@@ -41,6 +41,12 @@ filter = wordpress
 logpath = /var/log/auth.log
 
 port = http,https
+
+maxretry = 3
+
+findtime = 10800
+
+bantime = 86400
 ```
 
 После сохранения необходимо перезапустить сервис fail2ban.
@@ -48,3 +54,19 @@ port = http,https
 ```
 service fail2ban restart
 ```
+
+## Проверка работы
+
+После того, как всё будет сделано необходимо совершить неправильную авторизацию, после которой в файле `/varlog/auth.log` должна появиться запись, например:
+
+```
+Jan 19 14:17:17 container2 wordpress(mydomain.com)[12576]: Authentication failure for vanzhiganov from xxx.xxx.xxx.xxx
+```
+
+После нескольких неудачных попыток (значение `maxretry`) авторизации fail2ban должен будет заблокировать IP и сделать запись в журнале `/var/log/fail2ban.log`:
+
+```
+2016-01-19 15:03:38,696 fail2ban.actions: WARNING [wordpress] Ban xxx.xxx.xxx.xxx
+```
+
+Если записи появляются, то всё настроено верно и работает и ваш wordpress блог защищён от подбора пароля.
