@@ -19,7 +19,9 @@ apt-get install fail2ban
 
 В случае если используется Nginx как обратный (reverse) прокси-сервер, то стоит обратиться к [FAQ](https://wordpress.org/plugins/wp-fail2ban/faq/) (WP_FAIL2BAN_PROXIES), чтобы избежать пролировки всех пользователей
 
-## Настройка фильтра
+## Настройка фильта и fail
+
+Указанный выше плагин уже содержит правила для поиска, его достаточно скачать по адресу `http://plugins.svn.wordpress.org/wp-fail2ban/trunk/wordpress.conf`:
 
 ```
 cd /etc/fail2ban/filter.d
@@ -27,10 +29,9 @@ cd /etc/fail2ban/filter.d
 wget http://plugins.svn.wordpress.org/wp-fail2ban/trunk/wordpress.conf
 ```
 
-/etc/fail2ban/jail.d/wordpress.conf
+Сейчас определим jail. Создадим файл `/etc/fail2ban/jail.d/wordpress.conf` и добавим следующее:
 
 ```
-
 [wordpress]
 
 enabled = true
@@ -41,6 +42,8 @@ logpath = /var/log/auth.log
 
 port = http,https
 ```
+
+После сохранения необходимо перезапустить сервис fail2ban.
 
 ```
 service fail2ban restart
