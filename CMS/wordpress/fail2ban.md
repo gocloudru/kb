@@ -7,7 +7,7 @@
 ## Установка fail2ban
 
 ```
-apt-get update && apt-get install fail2ban
+apt-get install fail2ban
 ```
 
 После установки fail2ban будет находить попытки авторизации по SSH и после 5 попыток будет блокировать IP на 600 секунд.
@@ -23,16 +23,22 @@ apt-get update && apt-get install fail2ban
 
 ```
 cd /etc/fail2ban/filter.d
+
 wget http://plugins.svn.wordpress.org/wp-fail2ban/trunk/wordpress.conf
 ```
 
 /etc/fail2ban/jail.d/wordpress.conf
 
 ```
+
 [wordpress]
+
 enabled = true
+
 filter = wordpress
+
 logpath = /var/log/auth.log
+
 port = http,https
 ```
 
