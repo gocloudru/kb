@@ -23,31 +23,27 @@ apt-get install fail2ban
 
 Указанный выше плагин уже содержит правила для поиска, его достаточно скачать по адресу `http://plugins.svn.wordpress.org/wp-fail2ban/trunk/wordpress.conf`:
 
-```
-cd /etc/fail2ban/filter.d
+`cd /etc/fail2ban/filter.d`
 
-wget http://plugins.svn.wordpress.org/wp-fail2ban/trunk/wordpress.conf
-```
+`wget http://plugins.svn.wordpress.org/wp-fail2ban/trunk/wordpress.conf`
 
 Сейчас определим jail. Создадим файл `/etc/fail2ban/jail.d/wordpress.conf` и добавим следующее:
 
-```
-[wordpress]
+`[wordpress]`
 
-enabled = true
+`enabled = true`
 
-filter = wordpress
+`filter = wordpress`
 
-logpath = /var/log/auth.log
+`logpath = /var/log/auth.log`
 
-port = http,https
+`port = http,https`
 
-maxretry = 3
+`maxretry = 3`
 
-findtime = 10800
+`findtime = 10800`
 
-bantime = 86400
-```
+`bantime = 86400`
 
 После сохранения необходимо перезапустить сервис fail2ban.
 
@@ -57,7 +53,7 @@ service fail2ban restart
 
 ## Проверка работы
 
-После того, как всё будет сделано необходимо совершить неправильную авторизацию, после которой в файле `/varlog/auth.log` должна появиться запись, например:
+После того, как всё будет сделано необходимо совершить неправильную авторизацию, после которой в файле `/var/log/auth.log` должна появиться запись, например:
 
 ```
 Jan 19 14:17:17 container2 wordpress(mydomain.com)[12576]: Authentication failure for vanzhiganov from xxx.xxx.xxx.xxx
